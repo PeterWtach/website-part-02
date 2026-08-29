@@ -1,0 +1,2662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASE FILE Nº 002 · HAPPY 2ND ANNIVERSARY</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23d23b26' d='M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Special+Elite&family=Caveat:wght@600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js" defer></script>
+    <style>
+        /* ============ TOKENS ============ */
+        :root {
+            --paper: #f2e8d5;
+            --paper2: #eaddc1;
+            --card: #fbf5e7;
+            --ink: #211a12;
+            --red: #d23b26;
+            --red-deep: #a92c1a;
+            --mustard: #d9a03c;
+            --pink: #e8919f;
+            --disp: 'Archivo Black', sans-serif;
+            --type: 'Special Elite', monospace;
+            --hand: 'Caveat', cursive;
+            --stripes: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='26'%3E%3Crect width='44' height='26' fill='%23d23b26'/%3E%3Cpath d='M-6 32 L20 2 M8 34 L34 4 M22 36 L48 6 M36 38 L62 8' stroke='%23211a12' stroke-width='11'/%3E%3C/svg%3E");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--type);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::selection {
+            background: var(--red);
+            color: var(--paper)
+        }
+
+        ::-webkit-scrollbar {
+            width: 11px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--paper2)
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--ink);
+            border: 2px solid var(--paper2)
+        }
+
+        img {
+            user-select: none;
+            -webkit-user-drag: none
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer
+        }
+
+        section {
+            scroll-margin-top: 80px
+        }
+
+        @media(pointer:fine) {
+
+            html,
+            body,
+            a,
+            button,
+            .polaroid,
+            .joke {
+                cursor: none
+            }
+        }
+
+        /* ============ PAPER GRAIN ============ */
+        .grain {
+            position: fixed;
+            inset: 0;
+            z-index: 9990;
+            pointer-events: none;
+            opacity: .07;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        .plus-field {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: .5;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cpath d='M45 38v14M38 45h14' stroke='%23211a12' stroke-opacity='.13' stroke-width='2'/%3E%3C/svg%3E");
+        }
+
+        /* ============ LOADER ============ */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: var(--paper);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 22px;
+            transition: clip-path .7s cubic-bezier(.8, 0, .2, 1);
+            clip-path: inset(0 0 0 0);
+        }
+
+        #loader.done {
+            clip-path: inset(0 0 100% 0);
+            pointer-events: none
+        }
+
+        #loader .bureau {
+            font-size: .75rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            opacity: .7
+        }
+
+        #loader h1 {
+            font-family: var(--disp);
+            font-size: clamp(1.4rem, 4.5vw, 2.6rem);
+            letter-spacing: .02em;
+            text-transform: uppercase
+        }
+
+        #loader .bar {
+            width: min(280px, 70vw);
+            height: 10px;
+            border: 2px solid var(--ink);
+            padding: 2px
+        }
+
+        #loader .bar i {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: var(--red);
+            animation: load 1.7s .15s ease forwards
+        }
+
+        @keyframes load {
+            to {
+                width: 100%
+            }
+        }
+
+        #loader .stamp {
+            opacity: 0
+        }
+
+        #loader.slam .stamp {
+            animation: stampIn .4s cubic-bezier(.2, 1.6, .3, 1) forwards
+        }
+
+        /* ============ STAMP COMPONENT ============ */
+        .stamp {
+            font-family: var(--disp);
+            color: var(--red);
+            border: 3px solid var(--red);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            padding: .5em 1em;
+            line-height: 1.15;
+            mix-blend-mode: multiply;
+            user-select: none;
+        }
+
+        .stamp::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1.5px solid var(--red);
+            pointer-events: none
+        }
+
+        .stamp.on-dark {
+            mix-blend-mode: normal
+        }
+
+        .stamp.small {
+            font-size: .72rem;
+            border-width: 2px;
+            padding: .35em .7em
+        }
+
+        .stamp.small::after {
+            inset: 3px
+        }
+
+        @keyframes stampIn {
+            0% {
+                opacity: 0;
+                transform: scale(3) rotate(-24deg)
+            }
+
+            60% {
+                opacity: 1;
+                transform: scale(.94) rotate(-12deg)
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(-12deg)
+            }
+        }
+
+        /* ============ HEADER + ECG PROGRESS ============ */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 900;
+            height: 54px;
+            background: var(--paper);
+            border-bottom: 2px solid var(--ink);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            font-size: .82rem;
+        }
+
+        header .file-id {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: .04em
+        }
+
+        header .file-id svg {
+            width: 17px;
+            height: 17px;
+            flex: none
+        }
+
+        header .file-id b {
+            font-family: var(--disp);
+            font-weight: 400;
+            font-size: .8rem;
+            letter-spacing: .06em
+        }
+
+        header .right {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .bpm-box {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border: 2px solid var(--ink);
+            padding: 4px 10px;
+            background: var(--card);
+            font-size: .75rem;
+            letter-spacing: .05em;
+        }
+
+        .bpm-box svg.lucide {
+            width: 14px;
+            height: 14px
+        }
+
+        #bpm {
+            font-family: var(--disp);
+            min-width: 2.4ch;
+            display: inline-block;
+            text-align: right
+        }
+
+        #bpmHeart {
+            width: 14px;
+            height: 14px;
+            fill: var(--red);
+            stroke: var(--red);
+            animation: beat .82s ease-in-out infinite;
+            transform-origin: center
+        }
+
+        @keyframes beat {
+
+            0%,
+            100% {
+                transform: scale(1)
+            }
+
+            12% {
+                transform: scale(1.45)
+            }
+
+            24% {
+                transform: scale(1)
+            }
+
+            36% {
+                transform: scale(1.3)
+            }
+        }
+
+        #soundBtn {
+            border: 2px solid var(--ink);
+            background: var(--card);
+            width: 36px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            transition: transform .15s;
+        }
+
+        #soundBtn:hover {
+            transform: rotate(-6deg) scale(1.06)
+        }
+
+        #soundBtn svg {
+            width: 16px;
+            height: 16px
+        }
+
+        #soundBtn .off {
+            display: none
+        }
+
+        #soundBtn.muted .on {
+            display: none
+        }
+
+        #soundBtn.muted .off {
+            display: block
+        }
+
+        #ecg {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 32px;
+            display: block
+        }
+
+        @media(max-width:620px) {
+            header .hide-sm {
+                display: none
+            }
+        }
+
+        /* ============ REVEAL SYSTEM ============ */
+        [data-reveal] {
+            --rot: 0deg;
+            --d: 0s;
+            opacity: 0;
+            transform: translateY(28px) rotate(var(--rot));
+            transition: opacity .8s cubic-bezier(.2, .8, .2, 1) var(--d), transform .8s cubic-bezier(.2, .8, .2, 1) var(--d);
+        }
+
+        [data-reveal].in {
+            opacity: 1;
+            transform: translateY(0) rotate(var(--rot))
+        }
+
+        /* ============ HERO ============ */
+        .hero {
+            min-height: 100svh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 130px 20px 90px;
+            overflow: hidden;
+        }
+
+        .hero .plus-field {
+            z-index: 0
+        }
+
+        .hero>* {
+            position: relative;
+            z-index: 1
+        }
+
+        .coffee {
+            position: absolute;
+            top: 9%;
+            right: 6%;
+            width: 150px;
+            opacity: .14;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 38px
+        }
+
+        .chip {
+            border: 2px solid var(--ink);
+            background: var(--card);
+            padding: 6px 13px;
+            font-size: .72rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .chip.classified {
+            border-color: var(--red);
+            color: var(--red);
+            transform: rotate(-3deg)
+        }
+
+        .hero-title {
+            font-family: var(--disp);
+            text-transform: uppercase;
+            line-height: .92;
+            letter-spacing: -.01em;
+            position: relative
+        }
+
+        .hero-title .l1 {
+            font-size: clamp(2.6rem, 9vw, 7rem)
+        }
+
+        .hero-title .l1 .outline {
+            color: transparent;
+            -webkit-text-stroke: 3px var(--red);
+            text-stroke: 3px var(--red);
+        }
+
+        .hero-title .l2 {
+            font-size: clamp(2.2rem, 8vw, 6.4rem)
+        }
+
+        .hero-stamp {
+            position: absolute;
+            right: clamp(-30px, -2vw, -6px);
+            top: -38%;
+            font-size: clamp(1.1rem, 3vw, 2.1rem);
+            padding: .45em .8em;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 2;
+            transition: transform .2s;
+        }
+
+        .hero-stamp.slam {
+            animation: stampIn .45s cubic-bezier(.2, 1.5, .3, 1) forwards
+        }
+
+        .hero-stamp .sub {
+            display: block;
+            font-family: var(--type);
+            font-size: .32em;
+            letter-spacing: .25em;
+            margin-top: .4em
+        }
+
+        .hero-stamp:hover {
+            transform: scale(1.04) rotate(-14deg)
+        }
+
+        .day-tag {
+            position: absolute;
+            left: 2%;
+            top: -14%;
+            font-family: var(--hand);
+            font-size: 1.3rem;
+            color: var(--red-deep);
+            transform: rotate(-8deg);
+        }
+
+        .typed-sub {
+            margin-top: 34px;
+            font-size: clamp(.95rem, 2vw, 1.15rem);
+            min-height: 3.2em;
+            max-width: 620px;
+            color: var(--ink);
+        }
+
+        .typed-sub .caret {
+            display: inline-block;
+            width: .55em;
+            background: var(--red);
+            height: 1em;
+            vertical-align: -.12em;
+            animation: blink 1s steps(1) infinite;
+            margin-left: 2px
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        .hero-note {
+            margin-top: 16px;
+            font-size: .8rem;
+            opacity: .65;
+            max-width: 480px
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 26px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            font-size: .7rem;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: var(--red-deep);
+            opacity: 0;
+            transition: opacity .8s;
+        }
+
+        .scroll-hint.in {
+            opacity: 1
+        }
+
+        .scroll-hint svg {
+            width: 20px;
+            height: 20px;
+            animation: dip 1.5s ease-in-out infinite
+        }
+
+        @keyframes dip {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(8px)
+            }
+        }
+
+        .float-heart {
+            position: absolute;
+            z-index: 0;
+            opacity: .35;
+            animation: floaty 7s ease-in-out infinite;
+            pointer-events: none
+        }
+
+        .float-heart svg {
+            width: 100%;
+            height: 100%
+        }
+
+        @keyframes floaty {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-8deg)
+            }
+
+            50% {
+                transform: translateY(-24px) rotate(8deg)
+            }
+        }
+
+        /* ============ MARQUEE ============ */
+        .marquee {
+            background: var(--red);
+            color: var(--paper);
+            overflow: hidden;
+            border-top: 3px solid var(--ink);
+            border-bottom: 3px solid var(--ink);
+            transform: rotate(-1.1deg) scale(1.03);
+            position: relative;
+            z-index: 5;
+        }
+
+        .marquee .track {
+            display: flex;
+            width: max-content;
+            animation: scrollX 20s linear infinite;
+            padding: 11px 0
+        }
+
+        .marquee.fast .track {
+            animation-duration: 5s
+        }
+
+        @keyframes scrollX {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        .marquee .item {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+            padding: 0 13px;
+            white-space: nowrap;
+            font-family: var(--disp);
+            font-size: clamp(.8rem, 1.8vw, 1.05rem);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .marquee .item svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--paper);
+            flex: none
+        }
+
+        /* ============ SECTION SCAFFOLD ============ */
+        .sec {
+            padding: 110px 24px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative
+        }
+
+        .overline {
+            color: var(--red);
+            letter-spacing: .32em;
+            font-size: .72rem;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .overline::before {
+            content: '';
+            width: 34px;
+            height: 2px;
+            background: var(--red)
+        }
+
+        .sec h2 {
+            font-family: var(--disp);
+            text-transform: uppercase;
+            line-height: 1;
+            font-size: clamp(2rem, 5.5vw, 3.8rem);
+            margin-bottom: 10px;
+        }
+
+        .squiggle {
+            display: block;
+            width: 190px;
+            margin: 8px 0 30px
+        }
+
+        .squiggle path {
+            stroke: var(--red);
+            stroke-width: 4;
+            fill: none;
+            stroke-linecap: round
+        }
+
+        .intro {
+            max-width: 640px;
+            font-size: 1rem
+        }
+
+        /* ============ DIAGNOSIS ============ */
+        .diag-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.25fr;
+            gap: 60px;
+            margin-top: 10px
+        }
+
+        @media(max-width:880px) {
+            .diag-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .doc-note {
+            background: var(--card);
+            border: 2px solid var(--ink);
+            padding: 26px 24px 20px;
+            transform: rotate(-2deg);
+            position: relative;
+            box-shadow: 6px 6px 0 var(--ink);
+            margin-top: 36px;
+            max-width: 380px;
+        }
+
+        .doc-note .tape {
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-3deg);
+            width: 96px;
+            height: 26px;
+            background: rgba(224, 208, 160, .9);
+            box-shadow: 0 2px 4px rgba(33, 26, 18, .15);
+        }
+
+        .doc-note p {
+            font-family: var(--hand);
+            font-size: 1.5rem;
+            line-height: 1.35;
+            color: var(--red-deep)
+        }
+
+        .doc-note .sig {
+            text-align: right;
+            margin-top: 8px;
+            font-size: 1.25rem
+        }
+
+        .checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px
+        }
+
+        .checklist li {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            border-bottom: 2px dashed rgba(33, 26, 18, .25);
+            padding-bottom: 18px;
+            position: relative;
+        }
+
+        .cbox {
+            flex: none;
+            width: 26px;
+            height: 26px;
+            border: 2.5px solid var(--ink);
+            background: var(--card);
+            margin-top: 3px;
+            position: relative;
+        }
+
+        .cbox svg {
+            position: absolute;
+            inset: -3px;
+            width: 30px;
+            height: 30px
+        }
+
+        .cbox path {
+            stroke: var(--red);
+            stroke-width: 3.4;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 32;
+            stroke-dashoffset: 32;
+            transition: stroke-dashoffset .35s ease;
+        }
+
+        li.ticked .cbox path {
+            stroke-dashoffset: 0
+        }
+
+        .mini-stamp {
+            position: absolute;
+            right: 0;
+            bottom: 8px;
+            font-family: var(--disp);
+            font-size: .6rem;
+            color: var(--red);
+            border: 2px solid var(--red);
+            padding: 2px 7px;
+            letter-spacing: .1em;
+            transform: rotate(-7deg) scale(2.4);
+            opacity: 0;
+            transition: all .28s cubic-bezier(.2, 1.6, .3, 1);
+        }
+
+        li.ticked .mini-stamp {
+            opacity: .95;
+            transform: rotate(-7deg) scale(1)
+        }
+
+        .checklist .num {
+            color: var(--red);
+            font-family: var(--disp);
+            font-size: .7rem;
+            margin-right: 6px
+        }
+
+        .checklist .txt {
+            font-size: 1rem
+        }
+
+        /* ============ EVIDENCE ============ */
+        #evidence {
+            background: var(--paper2);
+            border-top: 3px solid var(--ink);
+            border-bottom: 3px solid var(--ink)
+        }
+
+        .ev-note {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: .85rem;
+            color: var(--red-deep);
+            margin-bottom: 56px
+        }
+
+        .ev-note svg {
+            width: 16px;
+            height: 16px
+        }
+
+        .board {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 44px 38px;
+            padding-bottom: 30px
+        }
+
+        .polaroid {
+            background: var(--card);
+            padding: 12px 12px 46px;
+            position: relative;
+            box-shadow: 0 14px 28px rgba(33, 26, 18, .22);
+            touch-action: none;
+            transition: box-shadow .2s;
+        }
+
+        .polaroid.dragging {
+            box-shadow: 0 26px 44px rgba(33, 26, 18, .3)
+        }
+
+        .polaroid img {
+            display: block;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            filter: sepia(.18) contrast(1.02);
+            pointer-events: none
+        }
+
+        .polaroid .cap {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            text-align: center;
+            font-size: .72rem;
+            line-height: 1.35;
+            letter-spacing: .02em;
+        }
+
+        .tape-t {
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%) rotate(var(--tr, -4deg));
+            width: 88px;
+            height: 26px;
+            background: rgba(224, 208, 160, .9);
+            box-shadow: 0 2px 4px rgba(33, 26, 18, .15);
+        }
+
+        .exh {
+            position: absolute;
+            top: 9px;
+            left: -11px;
+            background: var(--red);
+            color: var(--paper);
+            font-family: var(--disp);
+            font-size: .62rem;
+            padding: 4px 9px;
+            letter-spacing: .1em;
+            transform: rotate(-7deg);
+            box-shadow: 2px 2px 0 rgba(33, 26, 18, .35);
+            z-index: 2;
+        }
+
+        .polaroid:nth-child(1) {
+            width: 232px
+        }
+
+        .polaroid:nth-child(2) {
+            width: 258px
+        }
+
+        .polaroid:nth-child(3) {
+            width: 214px
+        }
+
+        .polaroid:nth-child(4) {
+            width: 252px
+        }
+
+        .polaroid:nth-child(5) {
+            width: 228px
+        }
+
+        @media(max-width:640px) {
+            .polaroid {
+                width: min(78vw, 270px) !important
+            }
+
+            .polaroid img {
+                height: 190px
+            }
+        }
+
+        /* ============ JOKES (INK LAB) ============ */
+        #jokes {
+            background: var(--ink);
+            color: var(--paper)
+        }
+
+        #jokes .overline {
+            color: var(--pink)
+        }
+
+        #jokes .overline::before {
+            background: var(--pink)
+        }
+
+        #jokes .intro {
+            color: rgba(242, 232, 213, .85)
+        }
+
+        #jokes .squiggle path {
+            stroke: var(--pink)
+        }
+
+        .joke-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+            gap: 40px 34px;
+            margin-top: 56px;
+        }
+
+        .joke {
+            perspective: 1200px;
+            min-height: 250px;
+            position: relative
+        }
+
+        .joke-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 250px;
+            transform-style: preserve-3d;
+            transition: transform .65s cubic-bezier(.35, 1.3, .4, 1);
+        }
+
+        .joke.flipped .joke-inner {
+            transform: rotateY(180deg)
+        }
+
+        .jface {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background: var(--card);
+            color: var(--ink);
+            border: 2px solid var(--ink);
+            padding: 22px 20px 18px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, .45);
+        }
+
+        .jface.back {
+            transform: rotateY(180deg)
+        }
+
+        .jface .jno {
+            font-family: var(--disp);
+            font-size: .66rem;
+            letter-spacing: .16em;
+            color: var(--red);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .jface .jno::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: repeating-linear-gradient(90deg, var(--red) 0 6px, transparent 6px 11px)
+        }
+
+        .jface .q {
+            font-size: .98rem;
+            line-height: 1.55;
+            flex: 1
+        }
+
+        .jface .tap {
+            font-size: .64rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--red-deep);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 14px;
+        }
+
+        .jface .tap svg {
+            width: 13px;
+            height: 13px
+        }
+
+        .jface.back {
+            border-top: 8px solid var(--red)
+        }
+
+        .jface.back .plabel {
+            font-family: var(--disp);
+            color: var(--red);
+            font-size: .68rem;
+            letter-spacing: .2em;
+            margin-bottom: 12px
+        }
+
+        .jface.back .a {
+            font-size: 1.02rem;
+            line-height: 1.55;
+            flex: 1
+        }
+
+        .jface.back .note {
+            font-family: var(--hand);
+            font-size: 1.15rem;
+            color: var(--red-deep);
+            text-align: right
+        }
+
+        /* ============ INCIDENTS ============ */
+        .timeline {
+            position: relative;
+            margin-top: 64px
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            border-left: 3px dashed rgba(33, 26, 18, .4);
+        }
+
+        .inc {
+            position: relative;
+            width: calc(50% - 46px);
+            margin-bottom: 52px;
+        }
+
+        .inc:nth-child(odd) {
+            margin-left: auto
+        }
+
+        .inc .heart-dot {
+            position: absolute;
+            top: 6px;
+            width: 20px;
+            height: 20px;
+            fill: var(--red);
+        }
+
+        .inc:nth-child(odd) .heart-dot {
+            left: -58px
+        }
+
+        .inc:nth-child(even) .heart-dot {
+            right: -58px
+        }
+
+        .inc .day {
+            display: inline-block;
+            font-family: var(--disp);
+            font-size: .7rem;
+            letter-spacing: .14em;
+            border: 2px solid var(--red);
+            color: var(--red);
+            padding: 4px 10px;
+            margin-bottom: 12px;
+            transform: rotate(-2deg);
+        }
+
+        .inc .filed {
+            display: inline-block;
+            font-size: .58rem;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: var(--paper);
+            background: var(--ink);
+            padding: 3px 8px;
+            margin-left: 10px;
+            vertical-align: 3px;
+        }
+
+        .inc p {
+            font-size: .98rem
+        }
+
+        .inc:nth-child(even) {
+            text-align: right
+        }
+
+        .inc:nth-child(even) .overline-mini {
+            justify-content: flex-end
+        }
+
+        @media(max-width:760px) {
+            .timeline::before {
+                left: 12px
+            }
+
+            .inc {
+                width: 100%;
+                padding-left: 44px;
+                text-align: left !important
+            }
+
+            .inc .heart-dot {
+                left: 2px !important;
+                right: auto !important
+            }
+        }
+
+        .redacted {
+            position: relative;
+            white-space: nowrap;
+            font-weight: 700
+        }
+
+        .redacted::after {
+            content: '';
+            position: absolute;
+            inset: -1px -4px;
+            background: var(--ink);
+            transition: transform .45s cubic-bezier(.6, 0, .2, 1);
+            transform-origin: left;
+        }
+
+        .redacted:hover::after {
+            transform: scaleX(0)
+        }
+
+        .declass-note {
+            margin-top: 8px;
+            font-size: .68rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--red-deep)
+        }
+
+        /* ============ TREATMENT ============ */
+        #treatment {
+            background: var(--paper2);
+            text-align: center
+        }
+
+        #treatment .overline {
+            justify-content: center
+        }
+
+        #treatment .overline::after {
+            content: '';
+            width: 34px;
+            height: 2px;
+            background: var(--red)
+        }
+
+        #treatment .intro {
+            margin: 0 auto
+        }
+
+        .hazard {
+            height: 26px;
+            background-image: var(--stripes);
+            background-size: 44px 26px;
+            transform: rotate(1.05deg) scale(1.04);
+            border-block: 3px solid var(--ink);
+            position: relative;
+            z-index: 5;
+        }
+
+        .danger-wrap {
+            margin: 64px auto 10px;
+            width: fit-content;
+            position: relative
+        }
+
+        .danger-ring {
+            padding: 14px;
+            background-image: var(--stripes);
+            background-size: 44px 26px;
+            clip-path: polygon(8% 0, 92% 0, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0 92%, 0 8%);
+            box-shadow: 0 18px 36px rgba(33, 26, 18, .3);
+        }
+
+        #dangerBtn {
+            width: clamp(216px, 54vw, 280px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: var(--red);
+            border: 4px dashed var(--paper);
+            color: var(--paper);
+            font-family: var(--disp);
+            font-size: clamp(1.15rem, 3.4vw, 1.6rem);
+            line-height: 1.15;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            animation: dangerPulse 1.6s ease-in-out infinite;
+            transition: transform .18s;
+        }
+
+        #dangerBtn svg {
+            width: 34px;
+            height: 34px
+        }
+
+        #dangerBtn svg path {
+            stroke: var(--paper)
+        }
+
+        #dangerBtn:hover {
+            transform: scale(1.07) rotate(-3deg);
+            animation-duration: .55s
+        }
+
+        #dangerBtn:active {
+            transform: scale(.94)
+        }
+
+        @keyframes dangerPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(210, 59, 38, .55)
+            }
+
+            55% {
+                box-shadow: 0 0 0 22px rgba(210, 59, 38, 0)
+            }
+        }
+
+        .hand-arrow {
+            position: absolute;
+            right: -160px;
+            top: 52%;
+            width: 150px;
+            color: var(--red-deep);
+            font-family: var(--hand);
+            font-size: 1.35rem;
+            line-height: 1.2;
+            text-align: left;
+            transform: rotate(6deg);
+        }
+
+        .hand-arrow svg {
+            display: block;
+            width: 80px;
+            margin-top: 4px
+        }
+
+        .hand-arrow svg path {
+            stroke: var(--red-deep);
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round
+        }
+
+        @media(max-width:820px) {
+            .hand-arrow {
+                position: static;
+                transform: rotate(-2deg);
+                margin: 26px auto 0;
+                text-align: center
+            }
+
+            .hand-arrow svg {
+                margin: 4px auto 0;
+                transform: rotate(90deg)
+            }
+        }
+
+        .tiny-note {
+            margin-top: 26px;
+            font-size: .72rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            opacity: .6
+        }
+
+        /* ============ ALARM ============ */
+        .alarm-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            height: 48px;
+            background: var(--red);
+            color: var(--paper);
+            z-index: 9700;
+            display: flex;
+            overflow: hidden;
+            border-block: 3px solid var(--ink);
+            transition: transform .18s;
+        }
+
+        .alarm-bar.top {
+            top: 0;
+            transform: translateY(-110%)
+        }
+
+        .alarm-bar.bot {
+            bottom: 0;
+            transform: translateY(110%)
+        }
+
+        body.alarm .alarm-bar.top {
+            transform: translateY(0)
+        }
+
+        body.alarm .alarm-bar.bot {
+            transform: translateY(0)
+        }
+
+        #flash {
+            position: fixed;
+            inset: 0;
+            background: var(--red);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9650
+        }
+
+        body.alarm #flash {
+            animation: flash .46s steps(1, end) infinite
+        }
+
+        @keyframes flash {
+
+            0%,
+            49% {
+                opacity: .26
+            }
+
+            50%,
+            100% {
+                opacity: 0
+            }
+        }
+
+        body.alarm {
+            animation: shake .4s linear infinite
+        }
+
+        @keyframes shake {
+
+            10%,
+            90% {
+                transform: translate(-2px, 1px)
+            }
+
+            20%,
+            80% {
+                transform: translate(3px, -2px)
+            }
+
+            30%,
+            70% {
+                transform: translate(-4px, 2px)
+            }
+
+            40%,
+            60% {
+                transform: translate(4px, 1px)
+            }
+
+            50% {
+                transform: translate(-3px, -2px)
+            }
+        }
+
+        .warn-tri {
+            width: 20px;
+            height: 20px;
+            flex: none
+        }
+
+        .warn-tri path {
+            fill: var(--ink)
+        }
+
+        .warn-tri .mark {
+            fill: var(--red)
+        }
+
+        .alarm-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 0 12px;
+            white-space: nowrap;
+            font-family: var(--disp);
+            font-size: clamp(.85rem, 2.4vw, 1.15rem);
+            letter-spacing: .1em;
+            text-transform: uppercase
+        }
+
+        /* ============ CELEBRATION ============ */
+        #celebration {
+            position: fixed;
+            inset: 0;
+            z-index: 9600;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(24, 18, 12, .94);
+            padding: 26px;
+            overflow-y: auto;
+        }
+
+        #celebration.open {
+            display: flex
+        }
+
+        .cele-card {
+            background: var(--paper);
+            color: var(--ink);
+            max-width: 660px;
+            width: 100%;
+            padding: 56px 44px 40px;
+            position: relative;
+            transform: rotate(-1.2deg);
+            border: 2px solid var(--ink);
+            box-shadow: 12px 12px 0 rgba(0, 0, 0, .5);
+            animation: cardIn .55s cubic-bezier(.2, 1.4, .3, 1);
+            margin: auto;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: rotate(-1.2deg) translateY(70px) scale(.92)
+            }
+
+            to {
+                opacity: 1;
+                transform: rotate(-1.2deg) translateY(0) scale(1)
+            }
+        }
+
+        .cele-card .tape-t {
+            width: 110px
+        }
+
+        .cele-card .stamp.approved {
+            position: absolute;
+            top: -26px;
+            right: -14px;
+            font-size: .95rem;
+            transform: rotate(9deg);
+            animation: stampIn2 .4s .5s cubic-bezier(.2, 1.6, .3, 1) both;
+        }
+
+        @keyframes stampIn2 {
+            0% {
+                opacity: 0;
+                transform: rotate(9deg) scale(3)
+            }
+
+            100% {
+                opacity: 1;
+                transform: rotate(9deg) scale(1)
+            }
+        }
+
+        .cele-card .co {
+            color: var(--red);
+            letter-spacing: .3em;
+            font-size: .68rem;
+            text-transform: uppercase
+        }
+
+        .cele-card h2 {
+            font-family: var(--disp);
+            text-transform: uppercase;
+            line-height: 1;
+            margin: 14px 0 4px;
+            font-size: clamp(1.7rem, 5vw, 2.7rem)
+        }
+
+        .cele-card h2 .red {
+            color: var(--red);
+            display: block
+        }
+
+        .cele-card .msg {
+            margin: 20px 0 6px;
+            font-size: .98rem;
+            min-height: 7.2em
+        }
+
+        .cele-card .msg .caret {
+            display: inline-block;
+            width: .55em;
+            height: 1em;
+            background: var(--red);
+            vertical-align: -.12em;
+            animation: blink 1s steps(1) infinite
+        }
+
+        .cele-card .sig {
+            font-family: var(--hand);
+            font-size: 1.5rem;
+            color: var(--red-deep);
+            margin: 14px 0 24px
+        }
+
+        .final-stamps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 28px
+        }
+
+        .final-stamps span {
+            font-family: var(--disp);
+            font-size: .66rem;
+            letter-spacing: .1em;
+            border: 2.5px solid var(--ink);
+            padding: 6px 11px;
+            transform: rotate(var(--r, 0deg));
+        }
+
+        .final-stamps span:nth-child(2) {
+            border-color: var(--red);
+            color: var(--red)
+        }
+
+        .cele-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px
+        }
+
+        .btn {
+            font-family: var(--disp);
+            font-size: .8rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 14px 22px;
+            border: 2px solid var(--ink);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform .15s, box-shadow .15s;
+            position: relative;
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px
+        }
+
+        .btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--ink)
+        }
+
+        .btn:active {
+            transform: translate(0, 0);
+            box-shadow: none
+        }
+
+        .btn.red {
+            background: var(--red);
+            color: var(--paper);
+            border-color: var(--red-deep)
+        }
+
+        .btn.red:hover {
+            box-shadow: 4px 4px 0 var(--red-deep)
+        }
+
+        .cele-marquee {
+            position: absolute;
+            bottom: -3px;
+            left: -3px;
+            right: -3px;
+            background: var(--red);
+            color: var(--paper);
+            transform: rotate(0deg);
+            overflow: hidden;
+            border-top: 3px solid var(--ink);
+        }
+
+        .cele-marquee .track {
+            display: flex;
+            width: max-content;
+            animation: scrollX 12s linear infinite;
+            padding: 7px 0
+        }
+
+        .cele-marquee .item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 0 10px;
+            font-family: var(--disp);
+            font-size: .7rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            white-space: nowrap
+        }
+
+        .cele-marquee .item svg {
+            width: 12px;
+            height: 12px;
+            fill: var(--paper)
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background: var(--ink);
+            color: var(--paper);
+            text-align: center;
+            padding: 110px 24px 70px;
+            position: relative
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -14px;
+            left: 0;
+            right: 0;
+            height: 26px;
+            background-image: var(--stripes);
+            background-size: 44px 26px;
+            border-block: 3px solid var(--ink);
+            transform: rotate(-1deg);
+        }
+
+        footer .big {
+            font-family: var(--disp);
+            font-size: clamp(2.2rem, 7vw, 4.4rem);
+            text-transform: uppercase;
+            line-height: 1
+        }
+
+        footer .big .red {
+            color: var(--red)
+        }
+
+        footer .typed-line {
+            margin: 22px auto 8px;
+            min-height: 2.4em;
+            font-size: .95rem;
+            color: rgba(242, 232, 213, .9)
+        }
+
+        footer .typed-line .caret {
+            display: inline-block;
+            width: .55em;
+            height: 1em;
+            background: var(--pink);
+            vertical-align: -.12em;
+            animation: blink 1s steps(1) infinite
+        }
+
+        footer .fheart {
+            width: 30px;
+            height: 30px;
+            fill: var(--red);
+            margin: 18px 0;
+            animation: beat 1s ease-in-out infinite
+        }
+
+        footer .archivist {
+            margin: 26px auto 0;
+            max-width: 520px;
+            border: 2px dashed rgba(242, 232, 213, .4);
+            padding: 14px 18px;
+            font-size: .72rem;
+            letter-spacing: .06em;
+            color: rgba(242, 232, 213, .75);
+        }
+
+        footer .hint {
+            margin-top: 20px;
+            font-size: .7rem;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: var(--pink)
+        }
+
+        footer .credit {
+            margin-top: 34px;
+            font-size: .68rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            opacity: .5
+        }
+
+        /* ============ CURSOR / TOAST / FX ============ */
+        #cursor {
+            position: fixed;
+            z-index: 10001;
+            pointer-events: none;
+            width: 24px;
+            height: 24px;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+            transition: width .18s, height .18s;
+            display: none
+        }
+
+        #cursor svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 1px 2px rgba(33, 26, 18, .4))
+        }
+
+        #cursor.big {
+            width: 42px;
+            height: 42px
+        }
+
+        @media(pointer:fine) {
+            #cursor {
+                display: block
+            }
+        }
+
+        .h-trail {
+            position: fixed;
+            z-index: 9989;
+            pointer-events: none;
+            width: 13px;
+            height: 13px;
+            animation: trailFade .75s ease-out forwards
+        }
+
+        .h-trail svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--red)
+        }
+
+        @keyframes trailFade {
+            to {
+                opacity: 0;
+                transform: translate(-50%, -190%) scale(.3) rotate(-18deg)
+            }
+        }
+
+        #toasts {
+            position: fixed;
+            left: 18px;
+            bottom: 18px;
+            z-index: 9800;
+            display: flex;
+            flex-direction: column;
+            gap: 10px
+        }
+
+        .toast {
+            background: var(--ink);
+            color: var(--paper);
+            border: 2px solid var(--paper);
+            padding: 12px 18px;
+            font-size: .78rem;
+            letter-spacing: .06em;
+            max-width: 320px;
+            transform: translateX(-130%);
+            transition: transform .4s cubic-bezier(.2, 1.3, .3, 1);
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, .35);
+        }
+
+        .toast.show {
+            transform: translateX(0)
+        }
+
+        #fx {
+            position: fixed;
+            inset: 0;
+            z-index: 9700;
+            pointer-events: none
+        }
+
+        body.wobble {
+            animation: wobble .5s ease-in-out 5
+        }
+
+        @keyframes wobble {
+
+            0%,
+            100% {
+                transform: rotate(0)
+            }
+
+            25% {
+                transform: rotate(.7deg)
+            }
+
+            75% {
+                transform: rotate(-.7deg)
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grain"></div>
+
+    <!-- ==================== LOADER ==================== -->
+    <div id="loader">
+        <div class="bureau">Bureau of Love &amp; Sanity — Records Dept.</div>
+        <h1>Opening Case File Nº 002</h1>
+        <div class="bar"><i></i></div>
+        <div class="stamp small">Classified</div>
+    </div>
+
+    <!-- ==================== HEADER ==================== -->
+    <header>
+        <div class="file-id">
+            <i data-lucide="file-text"></i>
+            <b>CASE FILE Nº 002</b>
+            <span class="hide-sm">— SUBJECT: “THE MENTAL”</span>
+        </div>
+        <div class="right">
+            <div class="bpm-box" title="My heart rate. It's her fault.">
+                <i data-lucide="activity"></i>
+                <span id="bpm">72</span> BPM
+                <svg id="bpmHeart" viewBox="0 0 24 24">
+                    <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
+                </svg>
+            </div>
+            <button id="soundBtn" data-hover aria-label="toggle sound">
+                <i data-lucide="volume-2" class="on"></i>
+                <i data-lucide="volume-x" class="off"></i>
+            </button>
+        </div>
+        <svg id="ecg" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true">
+            <path id="ecgBase" fill="none" stroke="#211a12" stroke-opacity=".18" stroke-width="2" pathLength="1000" />
+            <path id="ecgLive" fill="none" stroke="#d23b26" stroke-width="2.6" stroke-linecap="round" pathLength="1000"
+                stroke-dasharray="0 1000" />
+        </svg>
+    </header>
+
+    <main>
+
+        <!-- ==================== HERO ==================== -->
+        <section class="hero" id="top">
+            <div class="plus-field"></div>
+            <svg class="coffee" viewBox="0 0 150 150">
+                <ellipse cx="75" cy="75" rx="66" ry="60" fill="none" stroke="#6b4a2a" stroke-width="9"
+                    stroke-dasharray="300 60" stroke-linecap="round" />
+                <ellipse cx="75" cy="75" rx="50" ry="45" fill="none" stroke="#6b4a2a" stroke-width="4"
+                    stroke-dasharray="180 40" stroke-dashoffset="90" stroke-linecap="round" />
+            </svg>
+            <span class="float-heart" style="width:26px;height:26px;left:12%;top:24%;animation-delay:.4s">
+                <svg viewBox="0 0 24 24">
+                    <path fill="#d23b26" d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
+                </svg>
+            </span>
+            <span class="float-heart" style="width:18px;height:18px;right:14%;top:60%;animation-delay:1.6s">
+                <svg viewBox="0 0 24 24">
+                    <path fill="#211a12" d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
+                </svg>
+            </span>
+            <span class="float-heart" style="width:14px;height:14px;left:22%;bottom:22%;animation-delay:2.4s">
+                <svg viewBox="0 0 24 24">
+                    <path fill="#d9a03c" d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
+                </svg>
+            </span>
+
+            <div class="chips">
+                <span class="chip" data-reveal style="--d:.05s">Patient: “The Mental”</span>
+                <span class="chip" data-reveal style="--d:.15s">Physician: Me (also mental)</span>
+                <span class="chip" data-reveal style="--d:.25s">Day count: 730+</span>
+                <span class="chip classified" data-reveal style="--d:.35s">Handle with love</span>
+            </div>
+
+            <div class="hero-title" data-reveal style="--d:.3s">
+                <span class="day-tag">← day 730, still obsessed</span>
+                <div class="l1">HAPPY <span class="outline">2ND</span></div>
+                <div class="l2">ANNIVERSARY</div>
+                <div class="stamp hero-stamp" id="heroStamp">
+                    Certified<br>Mental
+                    <span class="sub">Valid: forever · Nº 002</span>
+                </div>
+            </div>
+
+            <p class="typed-sub" data-reveal style="--d:.5s"><span id="heroType"></span><span class="caret"></span></p>
+            <p class="hero-note" data-reveal style="--d:.6s">
+                Official psychological evaluation of my favorite person.
+                Reader discretion advised: contains excessive cuteness, mild defamation, and 100% true facts.
+            </p>
+
+            <a class="scroll-hint" id="scrollHint" href="#diagnosis" data-hover>
+                <i data-lucide="arrow-down"></i>
+                scroll for the full diagnosis
+            </a>
+        </section>
+
+        <!-- ==================== MARQUEE ==================== -->
+        <div class="marquee" aria-hidden="true">
+            <div class="track" id="mq1"></div>
+        </div>
+
+        <!-- ==================== I. DIAGNOSIS ==================== -->
+        <section class="sec" id="diagnosis">
+            <div class="wrap">
+                <div class="overline" data-reveal>Section 01 — Clinical Observation</div>
+                <h2 data-reveal style="--d:.1s">The Diagnosis</h2>
+                <svg class="squiggle" viewBox="0 0 220 14" data-reveal style="--d:.15s">
+                    <path d="M3 8 Q 22 2 42 8 T 82 8 T 122 8 T 162 8 T 202 8" />
+                </svg>
+
+                <div class="diag-grid">
+                    <div>
+                        <p class="intro" data-reveal>
+                            Subject has been under close observation for 730 consecutive days — by me.
+                            Findings below. Every single item verified. Repeatedly. With great affection.
+                        </p>
+                        <div class="doc-note" data-reveal style="--d:.2s;--rot:-2deg">
+                            <span class="tape"></span>
+                            <p>Diagnosis: 100% mental. Treatment: impossible. Prognosis: I really, really hope it's
+                                contagious.</p>
+                            <p class="sig">— Dr. Me, Dept. of Cardiology (my heart has been hers since Day 1)</p>
+                        </div>
+                    </div>
+                    <ul class="checklist" id="checklist">
+                        <li data-reveal style="--d:.05s"><span class="cbox"><svg viewBox="0 0 30 30">
+                                    <path d="M7 15.5l5.5 5.5L24 8.5" />
+                                </svg></span><span class="txt"><span class="num">SYM-01</span>Laughs at her own joke an
+                                average of 4 seconds before telling it.</span><span class="mini-stamp">TRUE</span></li>
+                        <li data-reveal style="--d:.1s"><span class="cbox"><svg viewBox="0 0 30 30">
+                                    <path d="M7 15.5l5.5 5.5L24 8.5" />
+                                </svg></span><span class="txt"><span class="num">SYM-02</span>Replies “what?” to
+                                questions she 100% heard the first time.</span><span class="mini-stamp">TRUE</span></li>
+                        <li data-reveal style="--d:.15s"><span class="cbox"><svg viewBox="0 0 30 30">
+                                    <path d="M7 15.5l5.5 5.5L24 8.5" />
+                                </svg></span><span class="txt"><span class="num">SYM-03</span>Has verbal arguments with
+                                the GPS. Undefeated record: 143–0.</span><span class="mini-stamp">TRUE</span></li>
+                        <li data-reveal style="--d:.2s"><span class="cbox"><svg viewBox="0 0 30 30">
+                                    <path d="M7 15.5l5.5 5.5L24 8.5" />
+                                </svg></span><span class="txt"><span class="num">SYM-04</span>Says “I'm five minutes
+                                away” from locations that are not five minutes away. From anything. Ever.</span><span
+                                class="mini-stamp">TRUE</span></li>
+                        <li data-reveal style="--d:.25s"><span class="cbox"><svg viewBox="0 0 30 30">
+                                    <path d="M7 15.5l5.5 5.5L24 8.5" />
+                                </svg></span><span class="txt"><span class="num">SYM-05</span>Spontaneous 3AM kitchen
+                                concerts. Attendance: me. Merch: pending.</span><span class="mini-stamp">TRUE</span>
+                        </li>
+                        <li data-reveal style="--d:.3s"><span class="cbox"><svg viewBox="0 0 30 30">
+                                    <path d="M7 15.5l5.5 5.5L24 8.5" />
+                                </svg></span><span class="txt"><span class="num">SYM-06</span>Believes every dog on the
+                                street remembers her. Verdict: they do. She's unforgettable.</span><span
+                                class="mini-stamp">TRUE</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== II. EVIDENCE ==================== -->
+        <section class="sec" id="evidence">
+            <div class="wrap">
+                <div class="overline" data-reveal>Section 02 — Evidence Locker</div>
+                <h2 data-reveal style="--d:.1s">Photographic Evidence</h2>
+                <svg class="squiggle" viewBox="0 0 220 14" data-reveal style="--d:.15s">
+                    <path d="M3 8 Q 22 2 42 8 T 82 8 T 122 8 T 162 8 T 202 8" />
+                </svg>
+                <div class="ev-note" data-reveal style="--d:.2s">
+                    <i data-lucide="camera"></i>
+                    All exhibits are draggable. Evidence tampering is not only allowed — it's encouraged.
+                </div>
+                <!-- REPLACEMENT NOTE: swap each picsum URL below with your real photos -->
+                <div class="board">
+                    <figure class="polaroid" data-reveal style="--rot:-4deg;--d:.05s" data-hover>
+                        <span class="tape-t" style="--tr:-5deg"></span><span class="exh">EXHIBIT A</span>
+                        <img src="https://picsum.photos/seed/mental-01/460/420.jpg" alt="Exhibit A" loading="lazy">
+                        <figcaption class="cap">the mental in her natural habitat</figcaption>
+                    </figure>
+                    <figure class="polaroid" data-reveal style="--rot:3deg;--d:.12s" data-hover>
+                        <span class="tape-t" style="--tr:4deg"></span><span class="exh">EXHIBIT B</span>
+                        <img src="https://picsum.photos/seed/mental-02/460/420.jpg" alt="Exhibit B" loading="lazy">
+                        <figcaption class="cap">caught smiling at her phone. (it was me. hi.)</figcaption>
+                    </figure>
+                    <figure class="polaroid" data-reveal style="--rot:-2deg;--d:.19s" data-hover>
+                        <span class="tape-t" style="--tr:-3deg"></span><span class="exh">EXHIBIT C</span>
+                        <img src="https://picsum.photos/seed/mental-03/460/420.jpg" alt="Exhibit C" loading="lazy">
+                        <figcaption class="cap">crime scene. the cake did not survive.</figcaption>
+                    </figure>
+                    <figure class="polaroid" data-reveal style="--rot:4deg;--d:.26s" data-hover>
+                        <span class="tape-t" style="--tr:5deg"></span><span class="exh">EXHIBIT D</span>
+                        <img src="https://picsum.photos/seed/mental-04/460/420.jpg" alt="Exhibit D" loading="lazy">
+                        <figcaption class="cap">3AM. singing to the fridge. the fridge sang back.</figcaption>
+                    </figure>
+                    <figure class="polaroid" data-reveal style="--rot:-3deg;--d:.33s" data-hover>
+                        <span class="tape-t" style="--tr:-6deg"></span><span class="exh">EXHIBIT E</span>
+                        <img src="https://picsum.photos/seed/mental-05/460/420.jpg" alt="Exhibit E" loading="lazy">
+                        <figcaption class="cap">last seen wearing my hoodie. still at large.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== III. JOKES ==================== -->
+        <section class="sec" id="jokes">
+            <div class="wrap">
+                <div class="overline" data-reveal>Section 03 — Standardized Testing</div>
+                <h2 data-reveal style="--d:.1s">The Laugh Test</h2>
+                <svg class="squiggle" viewBox="0 0 220 14" data-reveal style="--d:.15s">
+                    <path d="M3 8 Q 22 2 42 8 T 82 8 T 122 8 T 162 8 T 202 8" />
+                </svg>
+                <p class="intro" data-reveal style="--d:.2s">
+                    Subject was administered a rigorous comedy examination.
+                    Result: 10/10 laughs, 0/10 sanity, 1 very charmed examiner.
+                    Tap each card to unseal the punchline.
+                </p>
+
+                <div class="joke-grid">
+                    <div class="joke" data-reveal style="--rot:-2deg;--d:.05s" data-hover>
+                        <div class="joke-inner">
+                            <div class="jface">
+                                <div class="jno">JOKE Nº 01</div>
+                                <div class="q">Why did my heart officially apply for hazard pay?</div>
+                                <div class="tap"><i data-lucide="sparkles"></i> tap for the punchline</div>
+                            </div>
+                            <div class="jface back">
+                                <div class="plabel">PUNCHLINE</div>
+                                <div class="a">Its full-time job is surviving you. No insurance plan on Earth covers
+                                    that.</div>
+                                <div class="note">she laughed. officially recorded.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="joke" data-reveal style="--rot:1.5deg;--d:.12s" data-hover>
+                        <div class="joke-inner">
+                            <div class="jface">
+                                <div class="jno">JOKE Nº 02</div>
+                                <div class="q">What do you call someone who has willingly dated me for two whole years?
+                                </div>
+                                <div class="tap"><i data-lucide="sparkles"></i> tap for the punchline</div>
+                            </div>
+                            <div class="jface back">
+                                <div class="plabel">PUNCHLINE</div>
+                                <div class="a">A hero. A gorgeous, slightly mental hero. With excellent taste in chaos.
+                                </div>
+                                <div class="note">she laughed. officially recorded.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="joke" data-reveal style="--rot:-1.5deg;--d:.19s" data-hover>
+                        <div class="joke-inner">
+                            <div class="jface">
+                                <div class="jno">JOKE Nº 03</div>
+                                <div class="q">The doctor told me: “You must stay away from crazy people.”</div>
+                                <div class="tap"><i data-lucide="sparkles"></i> tap for the punchline</div>
+                            </div>
+                            <div class="jface back">
+                                <div class="plabel">PUNCHLINE</div>
+                                <div class="a">Too late, doc. I've been head-over-heels in love with one for 730 days.
+                                </div>
+                                <div class="note">she laughed. officially recorded.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="joke" data-reveal style="--rot:2deg;--d:.26s" data-hover>
+                        <div class="joke-inner">
+                            <div class="jface">
+                                <div class="jno">JOKE Nº 04</div>
+                                <div class="q">Why is your phone battery always at 2%?</div>
+                                <div class="tap"><i data-lucide="sparkles"></i> tap for the punchline</div>
+                            </div>
+                            <div class="jface back">
+                                <div class="plabel">PUNCHLINE</div>
+                                <div class="a">It has seen things. It is tired. It has earned a vacation and a medal.
+                                </div>
+                                <div class="note">she laughed. officially recorded.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="joke" data-reveal style="--rot:-2.5deg;--d:.33s" data-hover>
+                        <div class="joke-inner">
+                            <div class="jface">
+                                <div class="jno">JOKE Nº 05</div>
+                                <div class="q">What's the difference between you and a fire alarm?</div>
+                                <div class="tap"><i data-lucide="sparkles"></i> tap for the punchline</div>
+                            </div>
+                            <div class="jface back">
+                                <div class="plabel">PUNCHLINE</div>
+                                <div class="a">You're louder, funnier, and I'd actually run toward you.</div>
+                                <div class="note">she laughed. officially recorded.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="joke" data-reveal style="--rot:1deg;--d:.4s" data-hover>
+                        <div class="joke-inner">
+                            <div class="jface">
+                                <div class="jno">JOKE Nº 06</div>
+                                <div class="q">Knock knock.</div>
+                                <div class="tap"><i data-lucide="sparkles"></i> tap for the punchline</div>
+                            </div>
+                            <div class="jface back">
+                                <div class="plabel">PUNCHLINE</div>
+                                <div class="a">Who's there? MENTAL. Mental who? Exactly — no cure, no refund. Happy
+                                    anniversary.</div>
+                                <div class="note">she laughed. officially recorded.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== IV. INCIDENTS ==================== -->
+        <section class="sec" id="incidents">
+            <div class="wrap">
+                <div class="overline" data-reveal>Section 04 — Official Records</div>
+                <h2 data-reveal style="--d:.1s">Incident Reports</h2>
+                <svg class="squiggle" viewBox="0 0 220 14" data-reveal style="--d:.15s">
+                    <path d="M3 8 Q 22 2 42 8 T 82 8 T 122 8 T 162 8 T 202 8" />
+                </svg>
+                <p class="intro" data-reveal style="--d:.2s">A selection of officially documented events from the last
+                    two years. Accuracy: questionable. Love: not.</p>
+
+                <div class="timeline">
+                    <div class="inc" data-reveal>
+                        <svg class="heart-dot" viewBox="0 0 24 24">
+                            <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
+                        </svg>
+                        <div><span class="day">DAY 001</span><span class="filed">FILED</span></div>
+                        <p>Subject laughed so hard she <span class="redacted" data-hover
+                                title="hover to declassify">snorted</span>, then blamed the chair. The chair was
+                            innocent. The memory is forever.</p>
+                        <div class="declass-note">↑ hover to declassify</div>
+                    </div>
+                    <div class="inc" data-reveal>
+                        <svg class="heart-dot" viewBox="0 0 24 24">
+                            <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
+                        </svg>
+                        <div><span class="day">DAY 019</span><span class="filed">FILED</span></div>
+                        <p>Exhibit: my hoodie, missing. Last seen on subject. Ruling: never getting it back. Honestly?
+                            Fair.</p>
+                    </div>
+                    <div class="inc" data-reveal>
+                        <svg class="heart-dot" viewBox="0 0 24 24">
+                            <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
+                        </svg>
+                        <div><span class="day">DAY 127</span><span class="filed">FILED</span></div>
+                        <p>Subject ordered “just one dessert,” then ate mine too, stating — quote — “you were too slow.”
+                            Charges: dropped. She's cute.</p>
+                    </div>
+                    <div class="inc" data-reveal>
+                        <svg class="heart-dot" viewBox="0 0 24 24">
+                            <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
+                        </svg>
+                        <div><span class="day">DAY 365</span><span class="filed">FILED</span></div>
+                        <p>One full year of beautiful chaos. Celebrated by getting completely lost together. Subject
+                            insisted it was “a shortcut.” It was not.</p>
+                    </div>
+                    <div class="inc" data-reveal>
+                        <svg class="heart-dot" viewBox="0 0 24 24">
+                            <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
+                        </svg>
+                        <div><span class="day">DAY 548</span><span class="filed">FILED</span></div>
+                        <p>The Karaoke Incident. Three neighbors complained. Subject demanded an encore. Encore was
+                            granted. Society may never recover.</p>
+                    </div>
+                    <div class="inc" data-reveal>
+                        <svg class="heart-dot" viewBox="0 0 24 24">
+                            <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
+                        </svg>
+                        <div><span class="day">DAY 730</span><span class="filed">TODAY</span></div>
+                        <p>Two years. Zero regrets, infinite jokes, and one extremely mental heart that beats entirely
+                            for her. Filed under: the best accident of my life.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== V. TREATMENT ==================== -->
+        <div class="hazard" aria-hidden="true"></div>
+        <section class="sec" id="treatment">
+            <div class="wrap">
+                <div class="overline" data-reveal>Section 05 — Medical Intervention</div>
+                <h2 data-reveal style="--d:.1s">The Treatment</h2>
+                <svg class="squiggle" viewBox="0 0 220 14" data-reveal style="--d:.15s;margin-inline:auto">
+                    <path d="M3 8 Q 22 2 42 8 T 82 8 T 122 8 T 162 8 T 202 8" />
+                </svg>
+                <p class="intro" data-reveal style="--d:.2s">
+                    After 730 days of extensive research, the doctors (me) have concluded there is
+                    only one known cure for missing her too much. It is located inside the big red button.
+                    Medical professionals (also me) strongly advise against pressing it.
+                </p>
+
+                <div class="danger-wrap" data-reveal style="--d:.3s">
+                    <div class="danger-ring">
+                        <button id="dangerBtn" data-hover>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2L1 21h22L12 2zm0 6l7.5 12.9h-15L12 8z" />
+                                <path class="mark" d="M11 10h2v5h-2zm0 6.5h2v2h-2z" />
+                            </svg>
+                            DO NOT<br>PRESS
+                        </button>
+                    </div>
+                    <div class="hand-arrow">
+                        everyone presses it.<br>you're going to press it.<br>press it.
+                        <svg viewBox="0 0 80 60">
+                            <path d="M70 6 C 50 14, 34 22, 16 44 M16 44 l 2 -14 M16 44 l 14 -3" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="tiny-note" data-reveal style="--d:.4s">warning: my heart rate is already climbing just from
+                    you reading this</div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="big" data-reveal>FILE <span class="red">CLOSED.</span></div>
+        <p class="typed-line"><span id="footType"></span><span class="caret"></span></p>
+        <svg class="fheart" viewBox="0 0 24 24">
+            <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
+        </svg>
+        <div class="archivist">
+            ARCHIVIST NOTE: temporary evidence photographs are currently in use —
+            real memories to be inserted by the curator (that's you) before delivery.
+        </div>
+        <div class="hint">psst — type the magic word she answers to</div>
+        <div class="credit">stamped with love &amp; mild concern · est. 730 days ago · renewal: automatic, forever</div>
+    </footer>
+
+    <!-- ==================== ALARM / CELEBRATION ==================== -->
+    <div class="alarm-bar top">
+        <div class="track" id="alarmA"></div>
+    </div>
+    <div class="alarm-bar bot">
+        <div class="track" id="alarmB"></div>
+    </div>
+    <div id="flash"></div>
+
+    <div id="celebration">
+        <div class="cele-card">
+            <span class="tape-t" style="--tr:-4deg"></span>
+            <div class="stamp approved on-dark">Approved<br>for forever</div>
+            <div class="co">Official result — examination complete</div>
+            <h2>Happy 2nd Anniversary,<span class="red">My Favorite Mental</span></h2>
+            <p class="msg"><span id="celeType"></span><span class="caret"></span></p>
+            <p class="sig">Happy anniversary, my favorite mental. I love you. — your fellow patient, since Day 001</p>
+            <div class="final-stamps">
+                <span style="--r:-2deg">DAYS: 730+</span>
+                <span style="--r:2deg">SANITY: LOST</span>
+                <span style="--r:-1deg">LOVE: ∞</span>
+            </div>
+            <div class="cele-btns">
+                <button class="btn red" id="moreChaos" data-hover><i data-lucide="party-popper"></i> MORE CHAOS</button>
+                <button class="btn" id="closeCele" data-hover>CLOSE THE FILE</button>
+            </div>
+            <div class="cele-marquee">
+                <div class="track" id="mq3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toasts"></div>
+    <canvas id="fx"></canvas>
+
+    <div id="cursor">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" fill="#d23b26"
+                stroke="#f2e8d5" stroke-width="1.6" />
+        </svg>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+            const $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
+            const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const FINE = matchMedia('(pointer:fine)').matches;
+            const HEART = '<svg viewBox="0 0 24 24"><path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z"/></svg>';
+            const TRI = '<svg class="warn-tri" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 6l7.5 12.9h-15L12 8z"/><path class="mark" d="M11 10h2v5h-2zm0 6.5h2v2h-2z"/></svg>';
+
+            /* ---------- audio engine (all synthesized, no files) ---------- */
+            const SFX = (() => {
+                let ctx = null, master = null, muted = false, alarmInt = null;
+                function init() {
+                    if (ctx) return; try {
+                        ctx = new (window.AudioContext || window.webkitAudioContext)();
+                        master = ctx.createGain(); master.gain.value = .4; master.connect(ctx.destination);
+                    } catch (e) { }
+                }
+                function env(t, dur, peak) {
+                    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t);
+                    g.gain.linearRampToValueAtTime(peak, t + .012); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+                    g.connect(master); return g;
+                }
+                function tone(type, f0, f1, dur, peak) {
+                    if (!ctx || muted) return; const t = ctx.currentTime;
+                    const o = ctx.createOscillator(); o.type = type; o.frequency.setValueAtTime(f0, t);
+                    if (f1) o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+                    o.connect(env(t, dur, peak || .22)); o.start(t); o.stop(t + dur + .06);
+                }
+                function noise(dur, peak, freq, q) {
+                    if (!ctx || muted) return; const t = ctx.currentTime;
+                    const len = Math.max(1, ctx.sampleRate * dur | 0), buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+                    for (let i = 0; i < len; i++)d[i] = Math.random() * 2 - 1;
+                    const src = ctx.createBufferSource(); src.buffer = buf;
+                    const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = freq || 1800; f.Q.value = q || .8;
+                    src.connect(f); f.connect(env(t, dur, peak || .2)); src.start(t);
+                }
+                return {
+                    init, get muted() { return muted; },
+                    toggle() { muted = !muted; if (alarmInt) { clearInterval(alarmInt); alarmInt = null; } return muted; },
+                    tick() { tone('square', 1150, 900, .035, .06); },
+                    click() { tone('triangle', 320, 180, .08, .18); },
+                    flip() { tone('sine', 260, 520, .09, .16); noise(.05, .1, 2400); },
+                    thud() { tone('sine', 150, 42, .3, .55); noise(.12, .3, 220, .6); },
+                    pop() { noise(.07, .28, 2600, 1); tone('triangle', 420, 900, .09, .16); },
+                    giggle() { [640, 760, 900, 1080, 930].forEach((f, i) => setTimeout(() => tone('sine', f, f * 1.12, .07, .2), i * 72)); },
+                    tada() {
+                        [523, 659, 784, 1046].forEach((f, i) => setTimeout(() => tone('triangle', f, f, .34, .26), i * 105));
+                        setTimeout(() => this.thud(), 480);
+                    },
+                    alarmStart() {
+                        if (!ctx || muted || alarmInt) return; const two = () => {
+                            tone('square', 640, 640, .16, .14);
+                            setTimeout(() => tone('square', 465, 465, .16, .14), 180);
+                        }; two(); alarmInt = setInterval(two, 380);
+                    },
+                    alarmStop() { if (alarmInt) { clearInterval(alarmInt); alarmInt = null; } }
+                };
+            })();
+            addEventListener('pointerdown', () => SFX.init(), { once: true });
+            addEventListener('keydown', () => SFX.init(), { once: true });
+
+            const soundBtn = $('#soundBtn');
+            soundBtn.addEventListener('click', () => {
+                const m = SFX.toggle(); soundBtn.classList.toggle('muted', m);
+                toast(m ? 'Sound off. The file goes silent.' : 'Sound on. Handle with care.');
+            });
+
+            /* ---------- toasts ---------- */
+            function toast(msg) {
+                const box = $('#toasts'); const t = document.createElement('div');
+                t.className = 'toast'; t.textContent = msg; box.appendChild(t);
+                requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+                setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 450); }, 3400);
+            }
+
+            /* ---------- ECG scroll progress ---------- */
+            (function () {
+                let d = 'M0 22', x = 0; const seg = ' l14 0 l5 -5 l4 5 l6 0 l4 -16 l5 30 l4 -14 l3 5 l14 0 l4 -7 l4 7';
+                while (x < 1280) { d += seg; x += 67; }
+                $('#ecgBase').setAttribute('d', d); $('#ecgLive').setAttribute('d', d);
+                const live = $('#ecgLive');
+                function upd() {
+                    const max = document.documentElement.scrollHeight - innerHeight;
+                    const p = max > 0 ? Math.min(1, scrollY / max) : 0;
+                    live.setAttribute('stroke-dasharray', (p * 1000) + ' 1000');
+                }
+                addEventListener('scroll', upd, { passive: true }); upd();
+            })();
+
+            /* ---------- BPM monitor ---------- */
+            let bpmTarget = 72, bpm = 72;
+            const bpmEl = $('#bpm'), bpmHeart = $('#bpmHeart');
+            setInterval(() => {
+                bpm += (bpmTarget - bpm) * .14; bpmEl.textContent = Math.round(bpm);
+                bpmHeart.style.animationDuration = (60 / Math.max(bpm, 40)) + 's';
+            }, 260);
+
+            /* ---------- marquee builders ---------- */
+            function fillMarquee(el, items, sep) {
+                const unit = items.map(t => '<span class="item">' + sep + t + '</span>').join('');
+                el.innerHTML = unit + unit;
+            }
+            fillMarquee($('#mq1'), ['Caution: certified mental', 'Handle with love', '2 years under the influence of her laugh', 'Escape attempts: 0', 'Do not feed after midnight'], HEART);
+            fillMarquee($('#alarmA'), ['Mental alert', 'Subject excessively adorable', 'Containment: impossible'], TRI);
+            fillMarquee($('#alarmB'), ['Mental alert', 'Subject excessively adorable', 'Containment: impossible'], TRI);
+            fillMarquee($('#mq3'), ['2 years down', 'Forever to go', 'Still not cured', 'Never trying'], HEART);
+
+            /* ---------- typewriter ---------- */
+            function typeInto(el, text, speed, cb) {
+                if (el._t) clearInterval(el._t);
+                let i = 0; el.textContent = ''; el._t = setInterval(() => {
+                    el.textContent += text[i++];
+                    if (i % 3 === 0) SFX.tick(); if (i >= text.length) { clearInterval(el._t); el._t = null; cb && cb(); }
+                }, speed);
+            }
+
+            /* ---------- reveal observer (armed after loader) ---------- */
+            function armReveals() {
+                const io = new IntersectionObserver(es => es.forEach(e => {
+                    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+                }), { threshold: .15, rootMargin: '0px 0px -6% 0px' });
+                $$('[data-reveal]').forEach(el => io.observe(el));
+            }
+
+            /* ---------- checklist auto-tick ---------- */
+            const cl = $('#checklist');
+            new IntersectionObserver((es, io) => {
+                if (!es[0].isIntersecting) return; io.disconnect();
+                [...cl.children].forEach((li, i) => setTimeout(() => { li.classList.add('ticked'); SFX.tick(); }, 600 + i * 280));
+            }, { threshold: .3 }).observe(cl);
+
+            /* ---------- polaroid dragging ---------- */
+            $$('.polaroid').forEach(p => {
+                let bx = 0, by = 0, px = 0, py = 0, drag = false;
+                const rot = parseFloat(p.style.getPropertyValue('--rot')) || 0;
+                p.addEventListener('pointerdown', e => {
+                    drag = true; bx = e.clientX - px; by = e.clientY - py;
+                    p.setPointerCapture(e.pointerId); p.classList.add('dragging');
+                    p.style.zIndex = ++polaroidZ; SFX.click();
+                });
+                p.addEventListener('pointermove', e => {
+                    if (!drag) return; px = e.clientX - bx; py = e.clientY - by;
+                    p.style.transform = `translate(${px}px,${py}px) rotate(${rot + (px % 7)}deg)`;
+                });
+                const end = () => { drag = false; p.classList.remove('dragging'); };
+                p.addEventListener('pointerup', end); p.addEventListener('pointercancel', end);
+            });
+            let polaroidZ = 10;
+
+            /* ---------- joke flips ---------- */
+            $$('.joke').forEach(j => j.addEventListener('click', () => { j.classList.toggle('flipped'); SFX.flip(); }));
+
+            /* ---------- confetti engine ---------- */
+            const fx = $('#fx'), fctx = fx.getContext('2d');
+            let parts = [], fxOn = false;
+            function sizeFx() {
+                fx.width = innerWidth * devicePixelRatio; fx.height = innerHeight * devicePixelRatio;
+                fctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+            }
+            sizeFx(); addEventListener('resize', sizeFx);
+            const PAL_PAPER = ['#d23b26', '#211a12', '#d9a03c', '#e8919f', '#a92c1a'];
+            const PAL_DARK = ['#d23b26', '#f2e8d5', '#d9a03c', '#e8919f', '#211a12'];
+            function drawHeart(s) {
+                fctx.beginPath(); fctx.moveTo(0, s * .3);
+                fctx.bezierCurveTo(0, 0, -s * .55, 0, -s * .55, s * .3); fctx.bezierCurveTo(-s * .55, s * .62, 0, s * .85, 0, s);
+                fctx.bezierCurveTo(0, s * .85, s * .55, s * .62, s * .55, s * .3); fctx.bezierCurveTo(s * .55, 0, 0, 0, 0, s * .3);
+                fctx.fill();
+            }
+            function spawn(o) {
+                if (parts.length > 950) parts.shift(); parts.push(Object.assign({
+                    x: 0, y: 0, vx: 0, vy: 0, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .3,
+                    w: 9 + Math.random() * 8, h: 5 + Math.random() * 5, t: 0, ff: .15 + Math.random() * .2, fp: Math.random() * 6.28,
+                    type: 'strip', color: PAL_PAPER[Math.random() * PAL_PAPER.length | 0], life: 400
+                }, o));
+            }
+            function burst(x, y, count, power, pal) {
+                for (let i = 0; i < count; i++) {
+                    const a = -Math.PI / 2 + (Math.random() - .5) * Math.PI * 1.5;
+                    const v = power * (.4 + Math.random() * .8);
+                    spawn({
+                        x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, type: Math.random() < .28 ? 'heart' : 'strip',
+                        color: (pal || PAL_PAPER)[Math.random() * (pal || PAL_PAPER).length | 0],
+                        s: 6 + Math.random() * 7, life: 180 + Math.random() * 140
+                    });
+                } if (!RM) SFX.pop();
+            }
+            function heartRain(n) {
+                for (let i = 0; i < n; i++)setTimeout(() => spawn({
+                    x: Math.random() * innerWidth, y: -30, vy: .8 + Math.random() * 1.6, vx: (Math.random() - .5) * .6,
+                    type: 'heart', color: PAL_DARK[Math.random() * PAL_DARK.length | 0], s: 7 + Math.random() * 8, life: 900
+                }), i * 70);
+            }
+            function dust(x, y) {
+                for (let i = 0; i < 24; i++) {
+                    const a = Math.random() * 6.28, v = 1 + Math.random() * 3.4;
+                    spawn({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, type: 'dot', color: '#211a12', s: 2 + Math.random() * 3, life: 60 });
+                }
+            }
+            function loop() {
+                fctx.clearRect(0, 0, innerWidth, innerHeight);
+                parts = parts.filter(p => {
+                    p.t++; p.vy += .13; p.vx *= .992; p.vy *= .992;
+                    p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+                    if (p.y > innerHeight + 70 || p.t > p.life) return false;
+                    fctx.save(); fctx.translate(p.x, p.y); fctx.rotate(p.rot); fctx.fillStyle = p.color;
+                    fctx.globalAlpha = Math.min(1, (p.life - p.t) / 40);
+                    if (p.type === 'strip') {
+                        fctx.scale(1, Math.max(.15, Math.abs(Math.sin(p.t * p.ff + p.fp))));
+                        fctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    }
+                    else if (p.type === 'heart') { drawHeart(p.s || 8); }
+                    else { fctx.beginPath(); fctx.arc(0, 0, p.s / 2, 0, 6.28); fctx.fill(); }
+                    fctx.restore(); return true;
+                });
+                requestAnimationFrame(loop);
+            }
+            loop();
+
+            /* ---------- danger button sequence ---------- */
+            const dangerBtn = $('#dangerBtn'), cele = $('#celebration');
+            let running = false;
+            dangerBtn.addEventListener('mouseenter', () => bpmTarget = 152);
+            dangerBtn.addEventListener('mouseleave', () => { if (!running) bpmTarget = 76; });
+            dangerBtn.addEventListener('click', () => {
+                if (running) return; running = true; SFX.click(); bpmTarget = 186;
+                document.body.classList.add('alarm'); SFX.alarmStart();
+                setTimeout(() => {
+                    SFX.alarmStop(); document.body.classList.remove('alarm');
+                    cele.classList.add('open'); document.body.style.overflow = 'hidden';
+                    SFX.tada(); bpmTarget = 128;
+                    burst(innerWidth * .24, innerHeight * .92, 120, 14, PAL_DARK);
+                    setTimeout(() => burst(innerWidth * .76, innerHeight * .92, 120, 14, PAL_DARK), 160);
+                    setTimeout(() => burst(innerWidth * .5, innerHeight * .7, 110, 12, PAL_DARK), 330);
+                    heartRain(55);
+                    setTimeout(() => typeInto($('#celeType'),
+                        "730 days. Zero boring ones. You're my favorite notification, my loudest laugh, my permanent plus-one in every kind of chaos. Being mentally yours is the only diagnosis I'll ever want.", 26), 600);
+                    setTimeout(() => { bpmTarget = 96; }, 5000);
+                }, RM ? 600 : 2300);
+            });
+            $('#moreChaos').addEventListener('click', () => {
+                SFX.giggle(); bpmTarget = 168;
+                for (let i = 0; i < 3; i++)setTimeout(() => burst(Math.random() * innerWidth, innerHeight * .85, 90, 13, PAL_DARK), i * 180);
+                heartRain(25); setTimeout(() => bpmTarget = 100, 4000);
+            });
+            function closeCele() {
+                cele.classList.remove('open'); document.body.style.overflow = '';
+                running = false; bpmTarget = 84; SFX.click();
+            }
+            $('#closeCele').addEventListener('click', closeCele);
+            addEventListener('keydown', e => { if (e.key === 'Escape' && cele.classList.contains('open')) closeCele(); });
+
+            /* ---------- easter egg: type "mental" ---------- */
+            let buf = '', chaosLock = 0;
+            addEventListener('keydown', e => {
+                if (e.key.length !== 1) return; buf = (buf + e.key.toLowerCase()).slice(-10);
+                if (buf.includes('mental') && Date.now() > chaosLock) {
+                    chaosLock = Date.now() + 6000; buf = '';
+                    document.body.classList.add('wobble'); setTimeout(() => document.body.classList.remove('wobble'), 2600);
+                    toast('MENTAL MODE: ACTIVATED. As if it was ever off.');
+                    SFX.giggle(); bpmTarget = 178;
+                    for (let i = 0; i < 4; i++)setTimeout(() => burst(Math.random() * innerWidth, innerHeight * .8, 80, 12), i * 150);
+                    heartRain(30); setTimeout(() => bpmTarget = 88, 5000);
+                }
+            });
+
+            /* ---------- custom cursor ---------- */
+            if (FINE) {
+                const cur = $('#cursor'); let cx = innerWidth / 2, cy = innerHeight / 2, tx = cx, ty = cy;
+                addEventListener('mousemove', e => {
+                    tx = e.clientX; ty = e.clientY;
+                    if (!RM && Math.hypot(tx - cx, ty - cy) > 46) {
+                        const h = document.createElement('div');
+                        h.className = 'h-trail'; h.innerHTML = HEART; h.style.left = tx + 'px'; h.style.top = ty + 'px';
+                        document.body.appendChild(h); setTimeout(() => h.remove(), 780);
+                    }
+                });
+                (function follow() {
+                    cx += (tx - cx) * .22; cy += (ty - cy) * .22;
+                    cur.style.left = cx + 'px'; cur.style.top = cy + 'px'; requestAnimationFrame(follow);
+                })();
+                addEventListener('mouseover', e => { cur.classList.toggle('big', !!e.target.closest('[data-hover]')); });
+            }
+
+            /* ---------- loader + hero sequence ---------- */
+            const loader = $('#loader');
+            setTimeout(() => loader.classList.add('slam'), 900);
+            function startShow() {
+                loader.classList.add('done');
+                setTimeout(() => { loader.style.display = 'none'; }, 750);
+                armReveals();
+                setTimeout(() => { $('#scrollHint').classList.add('in'); }, 2600);
+                setTimeout(() => typeInto($('#heroType'),
+                    "Patient has been joyfully, incurably out of her mind for exactly 730 days. Condition: worsening. My involvement: 100% willing.", 26), 1200);
+                setTimeout(() => {
+                    const st = $('#heroStamp'); st.classList.add('slam');
+                    SFX.thud(); if (!RM) {
+                        document.body.style.animation = 'shake .4s linear 2';
+                        setTimeout(() => document.body.style.animation = '', 820);
+                    }
+                    const r = st.getBoundingClientRect(); dust(r.left + r.width / 2, r.top + r.height / 2);
+                    burst(r.left + r.width / 2, r.top + r.height / 2, 26, 7, ['#d23b26', '#211a12', '#d9a03c']);
+                }, 2450);
+                setTimeout(() => typeInto($('#footType'),
+                    "case status: open forever — renewal automatic, no refunds, no regrets.", 24), 4000);
+            }
+            setTimeout(startShow, 2050);
+            loader.addEventListener('click', () => { if (!loader.classList.contains('done')) { clearTimeout(startShow); startShow(); } });
+
+            /* ---------- lucide icons ---------- */
+            addEventListener('DOMContentLoaded', () => { if (window.lucide) { try { lucide.createIcons(); } catch (e) { } } });
+            if (window.lucide) { try { lucide.createIcons(); } catch (e) { } }
+        })();
+    </script>
+</body>
+
+</html>
