@@ -860,8 +860,14 @@
             padding: 12px 12px 46px;
             position: relative;
             box-shadow: 0 14px 28px rgba(33, 26, 18, .22);
-            touch-action: none;
             transition: box-shadow .2s;
+        }
+
+        /* Restrict drag functionality to fine pointers (laptop/desktop) */
+        @media(pointer:fine) {
+            .polaroid {
+                touch-action: none;
+            }
         }
 
         .polaroid.dragging {
@@ -1460,13 +1466,16 @@
         /* ============ CELEBRATION ============ */
         #celebration {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             z-index: 9600;
             display: none;
             align-items: center;
             justify-content: center;
             background: rgba(24, 18, 12, .94);
-            padding: 26px;
+            padding: 26px 26px 120px 26px; /* Increased bottom padding to clear mobile browser bars */
             overflow-y: auto;
         }
 
@@ -1866,6 +1875,37 @@
                 transition-duration: .01ms !important
             }
         }
+
+        /* ============ MOBILE OVERLAP FIX ============ */
+        @media(max-width: 768px) {
+            .hero-stamp {
+                position: relative;
+                right: auto;
+                top: auto;
+                margin: 24px auto 0;
+                display: block;
+                width: fit-content;
+            }
+            .day-tag {
+                position: relative;
+                left: auto;
+                top: auto;
+                display: block;
+                margin-bottom: 18px;
+                text-align: center;
+            }
+        }
+
+        /* ============ BEATING RED HEART IN HEADING ============ */
+        .beating-heart {
+            display: inline-block;
+            color: #ff0000;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+            animation: beat 1s ease-in-out infinite;
+            transform-origin: center;
+            font-size: 0.8em;
+            margin: 0 4px;
+        }
     </style>
 </head>
 
@@ -1945,7 +1985,7 @@
             <div class="hero-title" data-reveal style="--d:.3s">
                 <span class="day-tag">← day 730, still obsessed</span>
                 <div class="l1">HAPPY <span class="outline">2ND</span></div>
-                <div class="l2">ANNIVERSARY</div>
+                <div class="l2">ANNIVERSARY JAAAN 😘</div>
                 <div class="stamp hero-stamp" id="heroStamp">
                     Certified<br>Mental
                     <span class="sub">Valid: forever · Nº 002</span>
@@ -2086,13 +2126,12 @@
                         <div class="joke-inner">
                             <div class="jface">
                                 <div class="jno">JOKE Nº 01</div>
-                                <div class="q">Why did my heart officially apply for hazard pay?</div>
+                                <div class="q">What’s the real reason I get completely lost in your eyes?</div>
                                 <div class="tap"><i data-lucide="sparkles"></i> tap for the punchline</div>
                             </div>
                             <div class="jface back">
                                 <div class="plabel">PUNCHLINE</div>
-                                <div class="a">Its full-time job is surviving you. No insurance plan on Earth covers
-                                    that.</div>
+                                <div class="a">Because the rest of the world simply stops existing when you look at me. No GPS can save me now.</div>
                                 <div class="note">she laughed. officially recorded.</div>
                             </div>
                         </div>
@@ -2102,14 +2141,12 @@
                         <div class="joke-inner">
                             <div class="jface">
                                 <div class="jno">JOKE Nº 02</div>
-                                <div class="q">What do you call someone who has willingly dated me for two whole years?
-                                </div>
+                                <div class="q">What do you call the gorgeous girl who stole my hoodie and my heart?</div>
                                 <div class="tap"><i data-lucide="sparkles"></i> tap for the punchline</div>
                             </div>
                             <div class="jface back">
                                 <div class="plabel">PUNCHLINE</div>
-                                <div class="a">A hero. A gorgeous, slightly mental hero. With excellent taste in chaos.
-                                </div>
+                                <div class="a">My everything. And I don't even want the hoodie back, just you.</div>
                                 <div class="note">she laughed. officially recorded.</div>
                             </div>
                         </div>
@@ -2135,13 +2172,12 @@
                         <div class="joke-inner">
                             <div class="jface">
                                 <div class="jno">JOKE Nº 04</div>
-                                <div class="q">Why is your phone battery always at 2%?</div>
+                                <div class="q">Why is it scientifically impossible for me to stay mad at you?</div>
                                 <div class="tap"><i data-lucide="sparkles"></i> tap for the punchline</div>
                             </div>
                             <div class="jface back">
                                 <div class="plabel">PUNCHLINE</div>
-                                <div class="a">It has seen things. It is tired. It has earned a vacation and a medal.
-                                </div>
+                                <div class="a">Because you make one little pouty face, and my brain completely short-circuits. You're too cute for your own good.</div>
                                 <div class="note">she laughed. officially recorded.</div>
                             </div>
                         </div>
@@ -2198,50 +2234,43 @@
                             <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
                         </svg>
                         <div><span class="day">DAY 001</span><span class="filed">FILED</span></div>
-                        <p>Subject laughed so hard she <span class="redacted" data-hover
-                                title="hover to declassify">snorted</span>, then blamed the chair. The chair was
-                            innocent. The memory is forever.</p>
+                        <p>I still remember how happy you were the day I accepted you. It still circles in my mind, playing on repeat with visuals 💖🥰❤️</p>
                         <div class="declass-note">↑ hover to declassify</div>
                     </div>
                     <div class="inc" data-reveal>
                         <svg class="heart-dot" viewBox="0 0 24 24">
                             <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
                         </svg>
-                        <div><span class="day">DAY 019</span><span class="filed">FILED</span></div>
-                        <p>Exhibit: my hoodie, missing. Last seen on subject. Ruling: never getting it back. Honestly?
-                            Fair.</p>
+                        <div><span class="day">DAY RANDOM 🤪</span><span class="filed">FILED</span></div>
+                        <p>Exhibit: my brown-tshirt, missing. Last seen on her. Ruling: never getting it back. Honestly? Fair.</p>
                     </div>
                     <div class="inc" data-reveal>
                         <svg class="heart-dot" viewBox="0 0 24 24">
                             <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
                         </svg>
-                        <div><span class="day">DAY 127</span><span class="filed">FILED</span></div>
-                        <p>Subject ordered “just one dessert,” then ate mine too, stating — quote — “you were too slow.”
-                            Charges: dropped. She's cute.</p>
+                        <div><span class="day">DAY ROMANTIC 🫣</span><span class="filed">FILED</span></div>
+                        <p>Subject ordered “just one dessert,” then ate mine too 🤭. She's soo sooo cute 😍</p>
                     </div>
                     <div class="inc" data-reveal>
                         <svg class="heart-dot" viewBox="0 0 24 24">
                             <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
                         </svg>
                         <div><span class="day">DAY 365</span><span class="filed">FILED</span></div>
-                        <p>One full year of beautiful chaos. Celebrated by getting completely lost together. Subject
-                            insisted it was “a shortcut.” It was not.</p>
+                        <p>One full year of beautiful chaos. Tried to surprise her, ended up locking us out of the house. We just laughed on the porch till midnight.</p>
                     </div>
                     <div class="inc" data-reveal>
                         <svg class="heart-dot" viewBox="0 0 24 24">
                             <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
                         </svg>
                         <div><span class="day">DAY 548</span><span class="filed">FILED</span></div>
-                        <p>The Karaoke Incident. Three neighbors complained. Subject demanded an encore. Encore was
-                            granted. Society may never recover.</p>
+                        <p>The Great T-Shirt Heist. We had a silly fight over my oversized tshirts 👕, but my jaanu mental pilla 🥰 won them all. Now she's doing karaoke in them 🎤. Best defeat ever. 💕</p>
                     </div>
                     <div class="inc" data-reveal>
                         <svg class="heart-dot" viewBox="0 0 24 24">
                             <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 5.5-8 11-8 11z" />
                         </svg>
                         <div><span class="day">DAY 730</span><span class="filed">TODAY</span></div>
-                        <p>Two years. Zero regrets, infinite jokes, and one extremely mental heart that beats entirely
-                            for her. Filed under: the best accident of my life.</p>
+                        <p>Two years. A thousand fights, and still counting, but infinite jokes, and one extremely mental heart that beats entirely for her. Filed under: the best accident of my life.</p>
                     </div>
                 </div>
             </div>
@@ -2315,7 +2344,7 @@
             <span class="tape-t" style="--tr:-4deg"></span>
             <div class="stamp approved on-dark">Approved<br>for forever</div>
             <div class="co">Official result — examination complete</div>
-            <h2>Happy 2nd Anniversary,<span class="red">My Favorite Mental</span></h2>
+            <h2>Happy 2nd Anniversary, Jaanu <span class="beating-heart">❤️</span><span class="red">My Favorite Mental</span></h2>
             <p class="msg"><span id="celeType"></span><span class="caret"></span></p>
             <p class="sig">Happy anniversary, my favorite mental. I love you. — your fellow patient, since Day 001</p>
             <div class="final-stamps">
@@ -2480,12 +2509,14 @@
                 let bx = 0, by = 0, px = 0, py = 0, drag = false;
                 const rot = parseFloat(p.style.getPropertyValue('--rot')) || 0;
                 p.addEventListener('pointerdown', e => {
+                    if (e.pointerType === 'touch') return; // Disable drag on touch devices
                     drag = true; bx = e.clientX - px; by = e.clientY - py;
                     p.setPointerCapture(e.pointerId); p.classList.add('dragging');
                     p.style.zIndex = ++polaroidZ; SFX.click();
                 });
                 p.addEventListener('pointermove', e => {
-                    if (!drag) return; px = e.clientX - bx; py = e.clientY - by;
+                    if (!drag || e.pointerType === 'touch') return;
+                    px = e.clientX - bx; py = e.clientY - by;
                     p.style.transform = `translate(${px}px,${py}px) rotate(${rot + (px % 7)}deg)`;
                 });
                 const end = () => { drag = false; p.classList.remove('dragging'); };
@@ -2579,7 +2610,7 @@
                     setTimeout(() => burst(innerWidth * .5, innerHeight * .7, 110, 12, PAL_DARK), 330);
                     heartRain(55);
                     setTimeout(() => typeInto($('#celeType'),
-                        "730 days. Zero boring ones. You're my favorite notification, my loudest laugh, my permanent plus-one in every kind of chaos. Being mentally yours is the only diagnosis I'll ever want.", 26), 600);
+                        "730 days. Zero boring ones. We've had our fair share of fights, but I still have endless reasons to choose you over and over again. I have tons of feelings for you that I probably don't say out loud enough, but you are always profoundly special in my eyes ✨. You're my favorite notification, my loudest laugh, and beyond all the beautiful chaos, you're my absolute best friend 🤗. My first love ❤️. And the only girl who can make my heart do backflips just by smiling—making me blush even when I try not to 🥰.", 26), 600);
                     setTimeout(() => { bpmTarget = 96; }, 5000);
                 }, RM ? 600 : 2300);
             });
@@ -2625,6 +2656,38 @@
                     cur.style.left = cx + 'px'; cur.style.top = cy + 'px'; requestAnimationFrame(follow);
                 })();
                 addEventListener('mouseover', e => { cur.classList.toggle('big', !!e.target.closest('[data-hover]')); });
+            }
+
+            /* ---------- mobile touch heart trail ---------- */
+            if ('ontouchstart' in window) {
+                let lastTouchTime = 0;
+                addEventListener('touchmove', e => {
+                    if (e.touches.length > 0) {
+                        const touch = e.touches[0];
+                        const tx = touch.clientX;
+                        const ty = touch.clientY;
+                        const now = Date.now();
+                        if (!RM && now - lastTouchTime > 60) { // Throttle to prevent performance issues
+                            lastTouchTime = now;
+                            const h = document.createElement('div');
+                            h.className = 'h-trail'; h.innerHTML = HEART; h.style.left = tx + 'px'; h.style.top = ty + 'px';
+                            document.body.appendChild(h); setTimeout(() => h.remove(), 780);
+                        }
+                    }
+                }, { passive: true });
+                
+                addEventListener('touchstart', e => {
+                    if (e.touches.length > 0) {
+                        const touch = e.touches[0];
+                        const tx = touch.clientX;
+                        const ty = touch.clientY;
+                        if (!RM) {
+                            const h = document.createElement('div');
+                            h.className = 'h-trail'; h.innerHTML = HEART; h.style.left = tx + 'px'; h.style.top = ty + 'px';
+                            document.body.appendChild(h); setTimeout(() => h.remove(), 780);
+                        }
+                    }
+                }, { passive: true });
             }
 
             /* ---------- loader + hero sequence ---------- */
